@@ -10,11 +10,16 @@ we need
 -Flask
 -JSON concepts
 ## Different files used
-### myproject.py-To create database and my tables 
-### logproducts.py-To dump my catalog data into my database
-### myfinalproject.py-This is the python module we are going to run to display our item catalopg in browser.
-### Templates-Folder which contains all the html files used in these project
-### Static-Folder which contains css file for the above html pages 
+### myproject.py
+-To create database and my tables 
+### logproducts.py
+-To dump my catalog data into my database
+### myfinalproject.py
+-This is the python module we are going to run to display our item catalopg in browser.
+### Templates
+-Folder which contains all the html files used in these project
+### Static
+-Folder which contains css file for the above html pages 
 ## Running instructions
 #### python myfinalproject.py
 #### server need to be started and 
