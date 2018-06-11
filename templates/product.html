@@ -1,0 +1,118 @@
+<html>
+	
+<head>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='mystyle.css') }}">
+	</head>
+	<body>
+		<form action="/login" method="get">
+			<button type="submit">Login</button>	
+		</form>	
+		<div class = 'pane'>
+		<h1>{{ shoppingwebsite.name }}</h1>
+		
+		{% with messages = get_flashed_messages() %}
+      {% if messages %}
+          
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if products !=[] %}
+
+		<a href = "{{url_for('newProducts', shoppingwebsite_id = shoppingwebsite.id )}}">Create New Product</a>
+	</br></br>
+
+	<h2>textiles</h2>
+
+		{% for i in products %}
+		{% if i.course == 'textiles' %}
+
+		<p>{{i.name}}</p>
+		<p>{{i.price}}</p>
+	
+		<a href='{{url_for('editProducts', shoppingwebsite_id = shoppingwebsite.id, product_id=i.id ) }}' >Edit</a>
+	</br>
+	<a href='{{url_for('deleteProducts', shoppingwebsite_id = shoppingwebsite.id, product_id=i.id ) }}' >Delete</a>
+</br>
+</br>
+		{% endif %}
+
+		{% endfor %}
+
+		
+
+		</br></br>
+
+	<h2>homeappiliances</h2>
+
+		{% for i in products %}
+		{% if i.course == 'homeappiliances' %}
+
+		<p>{{i.name}}</p>
+		<p>{{i.price}}</p>
+	
+		<a href='{{url_for('editProducts', shoppingwebsite_id = shoppingwebsite.id, product_id=i.id ) }}' >Edit</a>
+	</br>
+	<a href='{{url_for('deleteProducts', shoppingwebsite_id = shoppingwebsite.id, product_id=i.id ) }}' >Delete</a>
+</br>
+</br>
+        {% endif %}
+
+		{% endfor %}
+		
+		
+
+		</br></br>
+
+	<h2>cosmetics</h2>
+
+		{% for i in products %}
+		{% if i.course == 'cosmetics' %}
+
+		<p>{{i.name}}</p>
+		<p>{{i.price}}</p>
+	
+		<a href='{{url_for('editProducts', shoppingwebsite_id  = shoppingwebsite.id, product_id=i.id ) }}' >Edit</a>
+	
+	<a href='{{url_for('deleteProducts', shoppingwebsite_id  = shoppingwebsite.id, product_id=i.id ) }}' >Delete</a>
+</br>
+</br>
+		{% endif %}
+
+		{% endfor %}
+		
+		
+
+		</br></br>
+
+	<h2>electronic gadgets</h2>
+
+		{% for i in products %}
+		{% if i.course == 'electronic gadgets' %}
+
+		<p>{{i.name}}</p>
+		<p>{{i.price}}</p>
+
+		<a href='{{url_for('editProducts', shoppingwebsite_id  = shoppingwebsite.id, product_id=i.id ) }}' >Edit</a>
+	</br>
+	<a href='{{url_for('deleteProducts', shoppingwebsite_id = shoppingwebsite.id, product_id=i.id ) }}' >Delete</a>
+</br>
+</br>
+{% endif %}
+
+		{% endfor %}
+		
+		
+
+		{% else %}
+		<p> You currently have no products. <p>
+		<a href = "{{url_for('newProducts', shoppingwebsite_id = shoppingwebsite.id )}}">Create New Product</a>
+			{% endif %}
+</div>
+	</body>
+
+</html>
