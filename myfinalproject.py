@@ -1,4 +1,10 @@
-from flask import Flask,render_template,request, redirect, jsonify, url_for, flash
+from flask import (Flask,
+                   render_template,
+                   request,
+                   redirect,
+                   jsonify,
+                   url_for,
+                   flash)
 
 
 from sqlalchemy import create_engine, asc
@@ -86,7 +92,7 @@ def gconnect():
     if result['issued_to'] != CLIENT_ID:
         response = make_response(
             json.dumps("Token's client ID does not match app's."), 401)
-        print "Token's client ID does not match app's."
+        print( "Token's client ID does not match app's.")
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -127,7 +133,7 @@ def gconnect():
     output += '-webkit-border-radius: 150px;'
     output += '-moz-border-radius: 150px;">'
     flash("you are now logged in as %s" % login_session['username'])
-    print "done!"
+    print ("done!")
     return output
 
 # User Helper Functions
@@ -195,8 +201,8 @@ def shoppingwebsiteproductJSON(shoppingwebsite_id):
         shoppingwebsite_id=shoppingwebsite_id).all()
     return jsonify(Products=[i.serialize for i in products])
 
-@app.route('/')
-@app.route('/shoppingwebsite/<int:shoppingwebsite_id >/product/<int:product_id >/JSON')
+
+@app.route('/shoppingwebsite/<int:shoppingwebsite_id>/product/<int:product_id>/JSON')
 def menuItemJSON(shoppingwebsite_id, product_id):
     Menu_Products = session.query(Products).filter_by(id=product_id).one()
     return jsonify(Menu_Products=Menu_Products.serialize)
@@ -213,9 +219,13 @@ def shoppingwebsitesJSON():
 def showshoppingwebsites():
 
     session = DBSession()
-    shoppingwebsites = session.query(Onlineshopping).order_by(asc(Onlineshopping.name))
+    shoppingwebsites =session.query(Onlineshopping).\
+    order_by(asc(Onlineshopping.name))
     session.close()
-    return render_template('shoppingwebsites.html', shoppingwebsites=shoppingwebsites)
+    return render_template('shoppingwebsites.html',
+                           shoppingwebsites=shoppingwebsites)
+
+
 @app.route('/shoppingwebsite/new/', methods=['GET', 'POST'])
 def newOnlineshopping():
     if 'username' not in login_session:
@@ -250,7 +260,9 @@ def editOnlineshopping(shoppingwebsite_id):
              % editedOnlineshopping.name)
             return redirect(url_for('showshoppingwebsites'))
     else:
-        return render_template('editShoppingwebsite.html', shoppingwebsite=editedOnlineshopping)
+        return
+        render_template('editShoppingwebsite.html',
+                        shoppingwebsite=editedOnlineshopping)
 
 
 @app.route('/shoppingwebsite/<int:shoppingwebsite_id>/delete/', methods=['GET', 'POST'])
@@ -259,43 +271,54 @@ def editOnlineshopping(shoppingwebsite_id):
 def deleteOnlineshopping(shoppingwebsite_id):
     if 'username' not in login_session:
         return redirect('/login')
-    shoppingwebsiteToDelete = session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
+    shoppingwebsiteToDelete = session.query(
+        Onlineshopping).filter_by(id=shoppingwebsite_id).one()
     if request.method == 'POST':
         session.delete(shoppingwebsiteToDelete)
         flash('%s Successfully Deleted' % shoppingwebsiteToDelete.name)
         session.commit()
         return
-        redirect(url_for('showshoppingwebsites', shoppingwebsite_id=shoppingwebsite_id))
+        redirect(url_for('showshoppingwebsites',
+                 shoppingwebsite_id=shoppingwebsite_id))
     else:
         return
-        render_template ('deleteshoppingwebsite.html', shoppingwebsite=shoppingwebsiteToDelete)
+        render_template('deleteshoppingwebsite.html',
+                        shoppingwebsite=shoppingwebsiteToDelete)
+
+
 @app.route('/shoppingwebsite/<int:shoppingwebsite_id>/')
 @app.route('/shoppingwebsite/<int:shoppingwebsite_id>/product/')
 def showProduct(shoppingwebsite_id):
-    shoppingwebsite = session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
+    shoppingwebsite =session.query(Onlineshopping).\
+    filter_by(id=shoppingwebsite_id).one()
     products = session.query(Products).filter_by(shoppingwebsite_id=shoppingwebsite_id).all()
     return
-    render_template('product.html', products=products, shoppingwebsite=shoppingwebsite)
+    render_template('product.html',
+                    products=products,
+                    shoppingwebsite=shoppingwebsite)
 
 
-@app.route('/shoppingwebsite/<int:shoppingwebsite_id>/product/new/',
- methods=['GET', 'POST'])
+@app.route('/shoppingwebsite/<int:shoppingwebsite_id>/product/new/',methods=['GET', 'POST'])
 
 
 def newProducts(shoppingwebsite_id):
     if 'username' not in login_session:
         return redirect('/login')
-    shoppingwebsite = session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
+    shoppingwebsite =session.query(Onlineshopping).\
+     filter_by(id=shoppingwebsite_id).one()
     if request.method == 'POST':
-        newProduct = Products(name=request.form['name'], price=request.form['price'], course=request.form['course'],shoppingwebsite_id=shoppingwebsite_id,user_id=shoppingwebsite.user_id)
+        newProduct = Products(name=request.form['name'], price=request.form['price'], course=request.form['course'],shoppingwebsite_id=shoppingwebsite_id,
+                              user_id=shoppingwebsite.user_id)
         session.add(newProduct)
         session.commit()
         flash('New Product %s Item Successfully Created' % (newProduct.name))
         return
-        redirect(url_for('showProduct', shoppingwebsite_id=shoppingwebsite_id))
+        redirect(url_for('showProduct',
+                         shoppingwebsite_id=shoppingwebsite_id))
     else:
         return
-        render_template('newproduct.html', shoppingwebsite_id=shoppingwebsite_id)
+        render_template('newproduct.html',
+                        shoppingwebsite_id=shoppingwebsite_id)
 
 
 @app.route('/shoppingwebsite/<int:shoppingwebsite_id>/product/<int:product_id>/edit',
@@ -321,26 +344,30 @@ def editProducts(shoppingwebsite_id, product_id):
         redirect(url_for('showProduct', shoppingwebsite_id=shoppingwebsite_id))
     else:
         return
-        render_template('editproduct.html',shoppingwebsite_id=shoppingwebsite_id,product_id=product_id, product=editedProduct)
+        render_template('editproduct.html',
+                        shoppingwebsite_id=shoppingwebsite_id,
+                        product_id=product_id, product=editedProduct)
 
 
-@app.route('/ shoppingwebsite / < int: shoppingwebsite_id > / product /<int: product_id > /delete', methods=['GET', 'POST'])
+@app.route('/shoppingwebsite/<int:shoppingwebsite_id>/product/<int:product_id>/delete',methods=['GET', 'POST'])
 
 
 def deleteProducts(shoppingwebsite_id, product_id):
 
     if 'username' not in login_session:
         return redirect('/login')
-    shoppingwebsite =session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
+    shoppingwebsite = session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
     ProductToDelete = session.query(Products).filter_by(id=product_id).one()
     if request.method == 'POST':
-        session.delete(ProductToDelete)
+        session.delete
+        (ProductToDelete)
         session.commit()
         flash('Product Successfully Deleted')
-        return redirect(url_for('showProduct', shoppingwebsite_id=shoppingwebsite_id))
+        return redirect(url_for('showProduct',
+                        shoppingwebsite_id=shoppingwebsite_id))
     else:
         return render_template('deleteproduct.html', product=ProductToDelete)
-    if __name__ == '__main__':
-        app.secret_key = 'super_secret_key'
-        app.debug = True
-        app.run(host='0.0.0.0', port=5000)
+if __name__ == '__main__':
+    app.secret_key = 'super_secret_key'
+    app.debug = True
+    app.run(host='0.0.0.0', port=5000)
