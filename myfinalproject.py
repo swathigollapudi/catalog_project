@@ -292,8 +292,7 @@ def showProduct(shoppingwebsite_id):
 def newProducts(shoppingwebsite_id):
     if 'username' not in login_session:
         return redirect('/login')
-    shoppingwebsite =
-    session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
+    shoppingwebsite = session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
     if request.method == 'POST':
         newProduct = Products(name=request.form['name'], price=request.form['price'], course=request.form['course'],shoppingwebsite_id=shoppingwebsite_id,user_id=shoppingwebsite.user_id)
         session.add(newProduct)
