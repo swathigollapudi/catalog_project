@@ -250,8 +250,7 @@ def editOnlineshopping(shoppingwebsite_id):
              % editedOnlineshopping.name)
             return redirect(url_for('showshoppingwebsites'))
     else:
-        return
-        render_template('editShoppingwebsite.html', shoppingwebsite=editedOnlineshopping)
+        return render_template('editShoppingwebsite.html', shoppingwebsite=editedOnlineshopping)
 
 
 @app.route('/shoppingwebsite/<int:shoppingwebsite_id>/delete/', methods=['GET', 'POST'])
