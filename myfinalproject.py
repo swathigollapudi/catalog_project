@@ -1,10 +1,4 @@
-from flask import Flask
-import render_template
-import request
-import redirect
-import jsonify
-import url_for
-import flash
+from flask import Flask,render_template,request, redirect, jsonify, url_for, flash
 
 
 from sqlalchemy import create_engine, asc
