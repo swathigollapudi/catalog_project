@@ -305,8 +305,7 @@ def newProducts(shoppingwebsite_id):
         render_template('newproduct.html', shoppingwebsite_id=shoppingwebsite_id)
 
 
-@app.route
-('/shoppingwebsite/<int:shoppingwebsite_id>/product/<int:product_id>/edit',
+@app.route('/shoppingwebsite/<int:shoppingwebsite_id>/product/<int:product_id>/edit',
     methods=['GET', 'POST'])
 
 
@@ -314,8 +313,7 @@ def editProducts(shoppingwebsite_id, product_id):
     if 'username' not in login_session:
         return redirect('/login')
     editedProduct = session.query(Products).filter_by(id=product_id).one()
-    shoppingwebsite =
-    session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
+    shoppingwebsite = session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
     if request.method == 'POST':
         if request.form['name']:
             editedProduct.name = request.form['name']
@@ -333,8 +331,7 @@ def editProducts(shoppingwebsite_id, product_id):
         render_template('editproduct.html',shoppingwebsite_id=shoppingwebsite_id,product_id=product_id, product=editedProduct)
 
 
-@app.route('/ shoppingwebsite / < int: shoppingwebsite_id > / product /
-     <int: product_id > /delete', methods=['GET', 'POST'])
+@app.route('/ shoppingwebsite / < int: shoppingwebsite_id > / product /<int: product_id > /delete', methods=['GET', 'POST'])
 
 
 def deleteProducts(shoppingwebsite_id, product_id):
@@ -344,8 +341,7 @@ def deleteProducts(shoppingwebsite_id, product_id):
     shoppingwebsite =session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
     ProductToDelete = session.query(Products).filter_by(id=product_id).one()
     if request.method == 'POST':
-        session.delete
-        (ProductToDelete)
+        session.delete(ProductToDelete)
         session.commit()
         flash('Product Successfully Deleted')
         return redirect(url_for('showProduct', shoppingwebsite_id=shoppingwebsite_id))
