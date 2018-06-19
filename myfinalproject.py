@@ -196,7 +196,7 @@ def shoppingwebsiteproductJSON(shoppingwebsite_id):
     return jsonify(Products=[i.serialize for i in products])
 
 
-@app.route('/ shoppingwebsite/<int: shoppingwebsite_id >/ product / <int: product_id > /JSON')
+@app.route('/shoppingwebsite/<int:shoppingwebsite_id >/product /<int: product_id >/JSON')
 def menuItemJSON(shoppingwebsite_id, product_id):
     Menu_Products = session.query(Products).filter_by(id=product_id).one()
     return jsonify(Menu_Products=Menu_Products.serialize)
