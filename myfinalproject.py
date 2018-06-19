@@ -221,10 +221,7 @@ def showshoppingwebsites():
     session = DBSession()
     shoppingwebsites = session.query(Onlineshopping).order_by(asc(Onlineshopping.name))
     session.close()
-    return render_template
-    ('shoppingwebsites.html', shoppingwebsites=shoppingwebsites)
-
-
+    return render_template('shoppingwebsites.html', shoppingwebsites=shoppingwebsites)
 @app.route('/shoppingwebsite/new/', methods=['GET', 'POST'])
 def newOnlineshopping():
     if 'username' not in login_session:
@@ -279,14 +276,10 @@ def deleteOnlineshopping(shoppingwebsite_id):
         flash('%s Successfully Deleted' % shoppingwebsiteToDelete.name)
         session.commit()
         return
-        redirect(url_for('showshoppingwebsites',
-                 shoppingwebsite_id=shoppingwebsite_id))
+        redirect(url_for('showshoppingwebsites', shoppingwebsite_id=shoppingwebsite_id))
     else:
         return
-        render_template
-        ('deleteshoppingwebsite.html', shoppingwebsite=shoppingwebsiteToDelete)
-
-
+        render_template ('deleteshoppingwebsite.html', shoppingwebsite=shoppingwebsiteToDelete)
 @app.route('/shoppingwebsite/<int:shoppingwebsite_id>/')
 @app.route('/shoppingwebsite/<int:shoppingwebsite_id>/product/')
 def showProduct(shoppingwebsite_id):
@@ -295,8 +288,7 @@ def showProduct(shoppingwebsite_id):
     products = session.query(Products).filter_by(
         shoppingwebsite_id=shoppingwebsite_id).all()
     return
-    render_template
-    ('product.html', products=products, shoppingwebsite=shoppingwebsite)
+    render_template('product.html', products=products, shoppingwebsite=shoppingwebsite)
 
 
 @app.route
@@ -310,10 +302,7 @@ def newProducts(shoppingwebsite_id):
     shoppingwebsite =
     session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
     if request.method == 'POST':
-        newProduct = Products(name=request.form['name'], price=request.form[
-                        'price'], course=request.form['course'],
-                        shoppingwebsite_id=shoppingwebsite_id,
-                        user_id=shoppingwebsite.user_id)
+        newProduct = Products(name=request.form['name'], price=request.form['price'], course=request.form['course'],shoppingwebsite_id=shoppingwebsite_id,user_id=shoppingwebsite.user_id)
         session.add(newProduct)
         session.commit()
         flash('New Product %s Item Successfully Created' % (newProduct.name))
@@ -321,9 +310,7 @@ def newProducts(shoppingwebsite_id):
         redirect(url_for('showProduct', shoppingwebsite_id=shoppingwebsite_id))
     else:
         return
-        render_template
-    ('newproduct.html',
-        shoppingwebsite_id=shoppingwebsite_id)
+        render_template('newproduct.html', shoppingwebsite_id=shoppingwebsite_id)
 
 
 @app.route
@@ -351,10 +338,7 @@ def editProducts(shoppingwebsite_id, product_id):
         redirect(url_for('showProduct', shoppingwebsite_id=shoppingwebsite_id))
     else:
         return
-        render_template
-        ('editproduct.html',
-            shoppingwebsite_id=shoppingwebsite_id,
-            product_id=product_id, product=editedProduct)
+        render_template('editproduct.html',shoppingwebsite_id=shoppingwebsite_id,product_id=product_id, product=editedProduct)
 
 
 @app.route('/ shoppingwebsite / < int: shoppingwebsite_id > / product /
@@ -365,16 +349,14 @@ def deleteProducts(shoppingwebsite_id, product_id):
 
     if 'username' not in login_session:
         return redirect('/login')
-    shoppingwebsite =
-        session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
+    shoppingwebsite =session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
     ProductToDelete = session.query(Products).filter_by(id=product_id).one()
     if request.method == 'POST':
         session.delete
         (ProductToDelete)
         session.commit()
         flash('Product Successfully Deleted')
-        return redirect(url_for('showProduct',
-                        shoppingwebsite_id=shoppingwebsite_id))
+        return redirect(url_for('showProduct', shoppingwebsite_id=shoppingwebsite_id))
     else:
         return render_template('deleteproduct.html', product=ProductToDelete)
     if __name__ == '__main__':
