@@ -196,8 +196,7 @@ def gdisconnect():
 
 @app.route('/shoppingwebsite/<int:shoppingwebsite_id>/product/JSON')
 def shoppingwebsiteproductJSON(shoppingwebsite_id):
-    shoppingwebsite =
-    session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
+    shoppingwebsite = session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
     products = session.query(Products).filter_by(
         shoppingwebsite_id=shoppingwebsite_id).all()
     return jsonify(Products=[i.serialize for i in products])
