@@ -219,9 +219,7 @@ def shoppingwebsitesJSON():
 def showshoppingwebsites():
 
     session = DBSession()
-    shoppingwebsites =
-    session.query(Onlineshopping).
-    order_by(asc(Onlineshopping.name))
+    shoppingwebsites = session.query(Onlineshopping).order_by(asc(Onlineshopping.name))
     session.close()
     return render_template
     ('shoppingwebsites.html', shoppingwebsites=shoppingwebsites)
