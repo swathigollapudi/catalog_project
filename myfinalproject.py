@@ -279,16 +279,13 @@ def deleteOnlineshopping(shoppingwebsite_id):
 @app.route('/shoppingwebsite/<int:shoppingwebsite_id>/')
 @app.route('/shoppingwebsite/<int:shoppingwebsite_id>/product/')
 def showProduct(shoppingwebsite_id):
-    shoppingwebsite =
-    session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
-    products = session.query(Products).filter_by(
-        shoppingwebsite_id=shoppingwebsite_id).all()
+    shoppingwebsite = session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
+    products = session.query(Products).filter_by(shoppingwebsite_id=shoppingwebsite_id).all()
     return
     render_template('product.html', products=products, shoppingwebsite=shoppingwebsite)
 
 
-@app.route
-('/shoppingwebsite/<int:shoppingwebsite_id>/product/new/',
+@app.route('/shoppingwebsite/<int:shoppingwebsite_id>/product/new/',
  methods=['GET', 'POST'])
 
 
