@@ -257,19 +257,16 @@ def editOnlineshopping(shoppingwebsite_id):
             return redirect(url_for('showshoppingwebsites'))
     else:
         return
-        render_template
-        ('editShoppingwebsite.html', shoppingwebsite=editedOnlineshopping)
+        render_template('editShoppingwebsite.html', shoppingwebsite=editedOnlineshopping)
 
 
-@app.route
-('/shoppingwebsite/<int:shoppingwebsite_id>/delete/', methods=['GET', 'POST'])
+@app.route('/shoppingwebsite/<int:shoppingwebsite_id>/delete/', methods=['GET', 'POST'])
 
 
 def deleteOnlineshopping(shoppingwebsite_id):
     if 'username' not in login_session:
         return redirect('/login')
-    shoppingwebsiteToDelete = session.query(
-        Onlineshopping).filter_by(id=shoppingwebsite_id).one()
+    shoppingwebsiteToDelete = session.query(Onlineshopping).filter_by(id=shoppingwebsite_id).one()
     if request.method == 'POST':
         session.delete(shoppingwebsiteToDelete)
         flash('%s Successfully Deleted' % shoppingwebsiteToDelete.name)
