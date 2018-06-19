@@ -238,8 +238,7 @@ def newOnlineshopping():
         return render_template('newshoppingwebsite.html')
 
 
-@app.route
-('/shoppingwebsite/<int:shoppingwebsite_id>/edit/', methods=['GET', 'POST'])
+@app.route('/shoppingwebsite/<int:shoppingwebsite_id>/edit/', methods=['GET', 'POST'])
 
 
 def editOnlineshopping(shoppingwebsite_id):
