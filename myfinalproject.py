@@ -21,11 +21,14 @@ import httplib2
 import json
 from flask import make_response
 import requests
+import os
 
 app = Flask(__name__)
 
+PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
+json_url = os.path.join(PROJECT_ROOT, 'client_secrets.json')
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open(json_url, 'r').read())['web']['client_id']
 APPLICATION_NAME = "Restaurant Menu Application"
 
 
