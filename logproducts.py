@@ -4,7 +4,8 @@ from sqlalchemy.orm import sessionmaker
 from myproject import Onlineshopping, Base, Products, User
 
 
-engine = create_engine('sqlite:///shopping.db')
+# engine = create_engine('sqlite:///shopping.db')
+engine = create_engine('postgresql://catalog:password@localhost/catalog')  
 
 
 Base.metadata.bind = engine
